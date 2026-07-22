@@ -40,7 +40,10 @@ def recommend(movie):
         recommended_movies_poster.append(fetchMoviePoster(movies.iloc[movie[0]].movie_id))
     return  recommended_movies,recommended_movies_poster
 
-st.text('Movie recommendation system')
+st.set_page_config(page_title="CineRecommend", page_icon="🎬")
+
+st.title('CineRecommend')
+st.markdown("##### Personalised Movie Recommendation System")
 
 movies = pickle.load(open('movies.pkl', 'rb'))
 similarity = pickle.load(open('similarity.pkl', 'rb'))
@@ -48,7 +51,7 @@ similarity = pickle.load(open('similarity.pkl', 'rb'))
 movies_list = movies['title'].values
 
 selected_movie_name = st.selectbox(
-    "How would you like to be contacted?",
+    "Search or select a movie to get recommendations:",
     movies_list,
 )
 
