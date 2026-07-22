@@ -1,11 +1,31 @@
 import streamlit as st
 #  To fetch movie using api of TMDB
 import requests
+import os
+import pickle
+import gdown
+
 def fetchMoviePoster(movie_id):
     #  Hit the api here with using the movie id and api key
     response = requests.get('https://api.themoviedb.org/3/movie/{}?api_key=8265bd1679663a7ea12ac168da84d2e8&language=en-US'.format(movie_id))
     data = response.json();
     return "https://image.tmdb.org/t/p/w500" + data["poster_path"]
+
+
+# Download files from Google Drive if they are not present
+if not os.path.exists("movies.pkl"):
+    gdown.download(
+        "https://drive.google.com/uc?id=1hbHmTynyluS-lYwCM2XOVNnpbJcD_1UD",
+        "movies.pkl",
+        quiet=False
+    )
+
+if not os.path.exists("similarity.pkl"):
+    gdown.download(
+        "https://drive.google.com/uc?id=1T8iieekvBoPgXWR5l1WY6wZp5oYgcrmr",
+        "similarity.pkl",
+        quiet=False
+    )
 
 
 def recommend(movie):
@@ -22,7 +42,6 @@ def recommend(movie):
 
 st.text('Movie recommendation system')
 
-import pickle
 movies = pickle.load(open('movies.pkl', 'rb'))
 similarity = pickle.load(open('similarity.pkl', 'rb'))
 
